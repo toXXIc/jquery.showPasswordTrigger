@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>showPasswordTrigger - Examples</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="../css/reset.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <script type="text/javascript" src="../js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.showPasswordTrigger.js"></script>
+
+    <style type="text/css">
+        .passVisibleBtn {
+            color: #2e7a17;
+            font-weight: bold;
+        }
+
+        .passHiddenBtn {
+            color: #960100;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+<div id="content">
+    <div class="wrapper">
+        <div class="title-box">
+            <h1>showPasswordTrigger</h1>
+            A jQuery plugin for displaying value of password fields
+        </div>
+        <h2>Examples</h2>
+
+        <form action="">
+
+            <h3>1. Reveal the password when the mouse is over the field or when the field has focus</h3>
+
+            <div class="box">
+                <label for="password_1">Password 1</label>
+                <input id="password_1" name="password_1" type="password" value="he11oVrybody!"/>
+                <span class="hint">Password will be revealed when mouse is over the field.</span>
+
+                <label for="password_2">Password 2</label>
+                <input id="password_2" name="password_2" type="password" value="cra4ckMyPass"/>
+                <span class="hint">The password will be revealed when the field has focus.</span>
+            </div>
+            <p>
+                To reveal the password field when the mouse cursor is over, just call
+                <var>showPasswordTrigger</var> without specifying the trigger element, but if you want
+                to show the password when the field has focus, pass <var>triggerOnFosus: true</var>.
+            </p>
+            <code>
+                $('#password_1').showPasswordTrigger();
+                $('#password_2').showPasswordTrigger({triggerOnFocus: true});
+            </code>
+            <hr/>
+
+
+            <h3>2. Reveal the password when the trigger element is clicked</h3>
+
+            <div class="box">
+                <label for="password_3">Password 3</label>
+                <input id="password_3" name="password_3" type="password" value="uCanSeeMee"/>
+                <input type="checkbox" id="password_3_checkbox"/>
+                <label for="password_3_checkbox">Show password</label>
+            </div>
+
+            <p>
+                When you specify the triggering element, the password will be shown when the trigger is active. Any visible
+                element on the page can be specified as the trigger, just specify its selector in <var>trigger</var>
+                option, but make sure that this selector matches a single element.
+            </p>
+            <code>
+                $('#password_3').showPasswordTrigger({trigger: '#password_3_checkbox'});
+            </code>
+            <hr/>
+
+
+            <h3>3. Custom classes for different trigger states</h3>
+
+            <div class="box">
+                <label for="password_4">Password 4</label>
+                <input id="password_4" name="password_4" type="password" value="butIcann0tSeeU"/>
+                <span id="password_4_trigger" class="button button-gray">Show/hide password</span>
+            </div>
+            <p>
+                You can specify custom classes which will be added to the trigger element when the password visibility
+                changes:
+            </p>
+            <code class="css">
+                .passVisibleBtn {<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;color: #2e7a17;<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;font-weight: bold;<br/>
+                }<br/><br/>
+                .passHiddenBtn {<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;color: #960100;<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;font-weight: bold;<br/>
+                }
+            </code>
+            <code>
+                $('#password_4').showPasswordTrigger({trigger:'#password_4_trigger',<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;triggerActiveClass:'passVisibleBtn',<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;triggerInactiveClass:'passHiddenBtn'});
+            </code>
+            <hr/>
+            <h2>Plugin options</h2>
+            <table class="styled">
+                <thead>
+                <tr>
+                    <th width="25%">Option</th>
+                    <th width="20%">Default</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><var>trigger</var></td>
+                    <td><var>null</var></td>
+                    <td><i>optional.</i> Should contain a selector of a single element which will toggle
+                        the password visibility when the trigger element is clicked. If <var>trigger</var> option is
+                        omitted, the password is revealed when the mouse is over the field or when the password input
+                        has focus (see <var>triggerOnFocus</var> option).
+                    </td>
+                </tr>
+                <tr>
+                    <td><var>triggerOnFocus</var></td>
+                    <td><var>false</var></td>
+                    <td><i>optional.</i>When set to true, the password will be revealed when the field has focus,
+                        otherwise the password will be revealed when the mouse is over the field. Has no effect when
+                        <var>trigger</var> option is specified.
+                    </td>
+                </tr>
+                <tr>
+                    <td><var>triggerActiveClass</var></td>
+                    <td><var>''</var></td>
+                    <td><i>optional.</i> Specifies a class which will be added to the trigger element when the password
+                        is visible. This option is taken into account only when <var>trigger</var> option is
+                        specified.
+                    </td>
+                </tr>
+                <tr>
+                    <td><var>triggerInactiveClass</var></td>
+                    <td><var>'passVisible'</var></td>
+                    <td><i>optional.</i> Specifies a class which will be added to the trigger element when the password
+                        is hidden. This option is taken into account only when <var>trigger</var> option is
+                        specified.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <br/>
+</div>
+
+<script type="text/javascript">
+    $('#password_1').showPasswordTrigger();
+    $('#password_2').showPasswordTrigger({triggerOnFocus:true});
+    $('#password_3').showPasswordTrigger({trigger:'#password_3_checkbox'});
+    $('#password_4').showPasswordTrigger({trigger:'#password_4_trigger',
+        triggerActiveClass:'passVisibleBtn',
+        triggerInactiveClass:'passHiddenBtn'});
+</script>
+</body>
+</html>
