@@ -2,10 +2,12 @@
  * jQuery showPasswordTrigger plugin
  * A flexible jQuery plugin for revealing values of password inputs.
  *
+ * https://github.com/toXXIc/jquery.showPasswordTrigger
+ *
+ * @version 1.0.1, 21-Mar-2012
+ *
  * Copyright (c) 2012 Basil Gren
  * Released under the MIT license.
- *
- * @version 1.0.0, 04-Mar-2012
  */
 
 (function ($) {
