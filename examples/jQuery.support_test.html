@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>jQuery.support tests</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="../css/reset.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <script type="text/javascript" src="../js/jquery-1.7.1.min.js"></script>
+
+    <style type="text/css">
+        td.undefined {
+            font-weight: bold;
+        }
+
+        td.supported {
+            color: #2e7a17;
+            font-weight: bold;
+        }
+
+        td.unsupported {
+            color: #960100;
+            font-weight: bold;
+        }
+
+        td, th {
+            text-align: center !important;
+        }
+
+        td.title {
+            font-weight: bold;
+            text-align: left !important;
+        }
+
+        td.current {
+            background-color: #DADFF4 !important;
+        }
+
+    </style>
+</head>
+
+<body>
+<div id="content">
+    <div class="wrapper">
+        <div class="title-box">
+            This page checks features that are supported by your browser.<br/>
+            It's just a test of jQuery.support for different browsers.
+        </div>
+        <h2>Tests</h2>
+        <p>The table below contains the results of tests for different browsers.
+        Description of each test can be found in
+        <a href="http://api.jquery.com/jQuery.support/">jQuery.support manual</a>.
+        </p><br/>
+
+        <table class="styled" id="test_results" width="100%">
+            <thead>
+            <tr>
+                <th width="20">#</th>
+                <th width="100">Test</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+    <br/>
+</div>
+
+<script type="text/javascript">
+jQuery(function(){
+
+    function testFeature(testName)
+    {
+        return $.support[testName];
+    }
+
+    function renderResultCell(result, highlight)
+    {
+        var resultText, cellClass;
+        if (result == undefined)
+        {
+            resultText = '?';
+            cellClass = 'undefined';
+        }
+        else if (result)
+        {
+            resultText = 'Yes';
+            cellClass = 'supported';
+        }
+        else
+        {
+            resultText = 'No';
+            cellClass = 'unsupported';
+        }
+
+        var hlClass = highlight ? ' current' : '';
+
+        return '<td class="' + cellClass + hlClass + '">' + resultText + '</td>';
+    }
+
+
+    function renderCollectedResults(testName)
+    {
+        var text = '';
+        $.each(results, function(index, item){
+            text += renderResultCell(item.results[testName]);
+        });
+
+        return text;
+    }
+
+    // Prepare list of tests.
+    var tests = 'ajax boxModel changeBubbles checkClone checkOn cors cssFloat hrefNormalized htmlSerialize' +
+                ' leadingWhitespace noCloneChecked noCloneEvent opacity optDisabled optSelected style' +
+                ' submitBubbles tbody';
+    tests = tests.split(' ');
+
+
+    // Results collected for some browsers.
+    var results = [
+        {   head: 'Opera<br/>11.61',
+            results: { ajax: true, boxModel:true, changeBubbles: true, checkClone: true, checkOn: true, cors: false,
+                cssFloat: true, hrefNormalized: true, htmlSerialize: true, leadingWhitespace: true,
+                noCloneChecked: true, noCloneEvent: true, opacity: true, optDisabled: true, optSelected: true,
+                style: true, submitBubbles: true, tbody: true }
+        },
+
+        {   head: 'Firefox<br/>11.0',
+            results: { ajax: true, boxModel:true, changeBubbles: true, checkClone: true, checkOn: true, cors: true,
+                cssFloat: true, hrefNormalized: true, htmlSerialize: true, leadingWhitespace: true,
+                noCloneChecked: true, noCloneEvent: true, opacity: true, optDisabled: true, optSelected: true,
+                style: true, submitBubbles: true, tbody: true }
+        },
+
+        {   head: 'IE<br/>9.0', // Version: IE 9.0.8112.16421
+            results: { ajax: true, boxModel:true, changeBubbles: true, checkClone: true, checkOn: true, cors: false,
+                cssFloat: true, hrefNormalized: true, htmlSerialize: true, leadingWhitespace: true,
+                noCloneChecked: false, noCloneEvent: true, opacity: true, optDisabled: true, optSelected: false,
+                style: true, submitBubbles: true, tbody: true }
+        },
+
+        {   head: 'IE<br/>8.0', // Version: IE 8.0.7600.16385
+            results: { ajax: true, boxModel:true, changeBubbles: false, checkClone: true, checkOn: true, cors: false,
+                cssFloat: false, hrefNormalized: true, htmlSerialize: false, leadingWhitespace: false,
+                noCloneChecked: false, noCloneEvent: false, opacity: false, optDisabled: true, optSelected: false,
+                style: false, submitBubbles: false, tbody: true }
+        },
+
+        {   head: 'IE<br/>7.0', // Version: IE 7.0.5730.13
+            results: { ajax: true, boxModel:true, changeBubbles: false, checkClone: false, checkOn: true, cors: false,
+                cssFloat: false, hrefNormalized: false, htmlSerialize: false, leadingWhitespace: false,
+                noCloneChecked: false, noCloneEvent: false, opacity: false, optDisabled: true, optSelected: false,
+                style: false, submitBubbles: false, tbody: false }
+        }
+    ];
+
+
+
+    // ----------------------------------------------
+    //             Tests
+    //
+
+    // Now go through all tests and fill the table.
+    var $tableBody = $('#test_results tbody'),
+        $header = $('#test_results thead tr');
+
+    for(var i = 0, len = tests.length; i < len; i++)
+    {
+        var testName = tests[i];
+        var row = '<tr><td class="title">' + (i + 1) + '</td><td class="title">' + testName + '</td>';
+
+        row += renderCollectedResults(testName);
+
+        row += renderResultCell(testFeature(testName), true);
+
+        row += '</tr>';
+        $tableBody.append($(row));
+    }
+
+    $.each(results, function(index, item){
+        $header.append($('<th>' + item.head + '</th>'));
+    });
+
+    // Append header
+    $header.append($('<th>This<br/>browser</th>'));
+
+});
+</script>
+</body>
+</html>

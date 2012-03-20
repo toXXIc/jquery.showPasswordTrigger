@@ -147,15 +147,13 @@ h1, h2, h3, b, strong {
     display: block;
     padding: 16px;
     margin: 8px 0;
-    background-color: rgb(179, 192, 255);
-    border: 1px solid;
-    border-color: #9fa4db;
+    background-color: #D0D0D0;
+    border: 1px solid #ACADC2;
     text-align: center;
     text-shadow: 0 1px 0 #fff;
 }
 
 .title-box h1 {
-    color: #2b3869;
     text-align: center;
     margin-top: 0;
 }

@@ -84,9 +84,8 @@
 
         function isIE() {
             // Function $.browser is deprecated, so we'll try to detect browser using $.support
-            // Following jQuery doc, leadingWhitespace will return false for IE 6-8.
-            // TODO: Check plugin in IE9
-            return !$.support.leadingWhitespace;
+            // Tests 'noCloneChecked' and 'optSelected' return false for IE 7-9 (hope IE 6 too ;)
+            return !$.support.noCloneChecked && !$.support.optSelected;
         }
 
 
