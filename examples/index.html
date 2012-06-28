@@ -41,7 +41,7 @@
 
                 <label for="password_2">Password 2</label>
                 <input id="password_2" name="password_2" type="password" value="cra4ckMyPass"/>
-                <span class="hint">The password will be revealed when the field has focus.</span>
+                <span class="hint">Password will be revealed when the field has focus.</span>
             </div>
             <p>
                 To reveal the password field when the mouse cursor is over, just call
@@ -49,7 +49,7 @@
                 to show the password when the field has focus, pass <var>triggerOnFosus: true</var>.
             </p>
             <code>
-                $('#password_1').showPasswordTrigger();
+                $('#password_1').showPasswordTrigger();<br/>
                 $('#password_2').showPasswordTrigger({triggerOnFocus: true});
             </code>
             <hr/>
@@ -75,16 +75,16 @@
             <hr/>
 
 
-            <h3>3. Custom classes for different trigger states</h3>
+            <h3>3. Trigger customization</h3>
 
             <div class="box">
                 <label for="password_4">Password 4</label>
                 <input id="password_4" name="password_4" type="password" value="butIcann0tSeeU"/>
-                <span id="password_4_trigger" class="button button-gray">Show/hide password</span>
+                <span id="password_4_trigger" class="button button-gray">Show password</span>
             </div>
             <p>
-                You can specify custom classes which will be added to the trigger element when the password visibility
-                changes:
+                You can specify custom classes which will be added to the trigger element when the password visibility is
+                changed. For more complex manipulations with trigger, you can specify <var>onChange</var> handler:
             </p>
             <code class="css">
                 .passVisibleBtn {<br/>
@@ -96,11 +96,15 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;font-weight: bold;<br/>
                 }
             </code>
-            <code>
-                $('#password_4').showPasswordTrigger({trigger:'#password_4_trigger',<br/>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;triggerActiveClass:'passVisibleBtn',<br/>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;triggerInactiveClass:'passHiddenBtn'});
-            </code>
+<code><pre>
+$('#password_4').showPasswordTrigger({trigger:'#password_4_trigger',
+    triggerActiveClass:'passVisibleBtn',
+    triggerInactiveClass:'passHiddenBtn',
+    onChange: function($trigger, isVisible) {
+        $trigger.text(isVisible ? 'Hide password' : 'Show password');
+    }
+});
+</pre></code>
             <hr/>
             <h2>Plugin options</h2>
             <table class="styled">
@@ -145,6 +149,16 @@
                         specified.
                     </td>
                 </tr>
+                <tr>
+                    <td><var>onChange</var></td>
+                    <td><var>null</var></td>
+                    <td><i>optional.</i> A callback function that will be called after password visibility is changed. 
+                        Two parameters are passed to this function: a jQuery object that contains trigger element 
+                        specified in <var>trigger</var> option and password visibility state (true - password is visible, 
+                        false - password is hidden).<br/>
+                        This callback is called only if <var>trigger</var> option is specified.
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </form>
@@ -158,7 +172,11 @@
     $('#password_3').showPasswordTrigger({trigger:'#password_3_checkbox'});
     $('#password_4').showPasswordTrigger({trigger:'#password_4_trigger',
         triggerActiveClass:'passVisibleBtn',
-        triggerInactiveClass:'passHiddenBtn'});
+        triggerInactiveClass:'passHiddenBtn',
+        onChange: function($trigger, isVisible) {
+            $trigger.text(isVisible ? 'Hide password' : 'Show password');
+        }
+    });
 </script>
 </body>
 </html>

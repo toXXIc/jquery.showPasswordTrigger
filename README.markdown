@@ -16,7 +16,7 @@ The plugin should be applied to input fields with `type="password"`. Several usa
 
 ```js
 
-    // Show password when mouse if over the #password_1
+    // Show password when mouse is over the #password_1
     $('#password_1').showPasswordTrigger();
 
     // Show password when #password_2 has focus
@@ -29,10 +29,15 @@ The plugin should be applied to input fields with `type="password"`. Several usa
     // trigger classes, so class 'passVisibleBtn' is added to the trigger
     // when password is visible and class 'passHiddenBtn' is added to the
     // trigger when password is hidden.
+    // In specified onChange callback we can make any other manipulations with
+    // trigger element
     $('#password_4').showPasswordTrigger({
             trigger:'#password_4_trigger',
             triggerActiveClass:'passVisibleBtn',
-            triggerInactiveClass:'passHiddenBtn'
+            triggerInactiveClass:'passHiddenBtn',
+            onChange: function($trigger, isVisible) {
+                $trigger.text(isVisible ? 'Hide password' : 'Show password');
+            }
     });
 ```
 
@@ -69,3 +74,11 @@ specified.
 Specifies a class which will be added to the trigger element when the password
 is hidden. This option is taken into account only when `trigger` option is
 specified.
+
+`onChange`
+*Optional. Default: `null`.*
+A callback function that will be called after password visibility is changed.
+Two parameters are passed to this function: a jQuery object that contains trigger element
+specified in `trigger` option and password visibility state (true - password is visible,
+false - password is hidden).
+This callback is called only if `trigger` option is specified.
